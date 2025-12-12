@@ -13,11 +13,11 @@ export function main() {
         console.log("                                                               ");
         console.log("***************************************************************");
         console.log("                                                               ");
-        console.log("                 1 - Registrar Remédio                         ");
-        console.log("                 2 - Listar todos os Remédios                  ");
-        console.log("                 3 - Buscar Remédio por Número                 ");
-        console.log("                 4 - Atualizar Dados do Remédio                ");
-        console.log("                 5 - Apagar Remédio                            ");
+        console.log("                 1 - Registrar Medicamento                     ");
+        console.log("                 2 - Listar todos os Medicamentos              ");
+        console.log("                 3 - Buscar Medicamento por Número             ");
+        console.log("                 4 - Atualizar Dados do Medicamento            ");
+        console.log("                 5 - Apagar Medicamento                        ");
         console.log("                 6 - Sair                                      ");
         console.log("                                                               ");
         console.log("***************************************************************", colors.reset);
@@ -34,35 +34,35 @@ export function main() {
 
         switch(option) {
             case 1:
-                console.log(colors.fg.whitestrong, "\n\nRegistrar Remédio\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nRegistrar Medicamento\n\n", colors.reset);
                 
 
 
                 keyPress();
                 break;
             case 2:
-                console.log(colors.fg.whitestrong, "\n\nListar todos os Remédios\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nListar todos os Medicamentos\n\n", colors.reset);
 
 
 
                 keyPress();
                 break;
             case 3:
-                console.log(colors.fg.whitestrong, "\n\nBuscar Remédio por Número \n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nBuscar Medicamento por Número \n\n", colors.reset);
 
 
 
                 keyPress();
                 break;
             case 4:
-                console.log(colors.fg.whitestrong, "\n\nAtualizar Dados do Remédio\n\n", colors.reset);
+                console.log(colors.fg.whitestrong, "\n\nAtualizar Dados do Medicamento\n\n", colors.reset);
 
 
-                
+
                 keyPress();
                 break;
             case 5:
-                console.log("\n\nApagar Remédio\n\n", colors.reset);
+                console.log("\n\nApagar Medicamento\n\n", colors.reset);
 
                 
 
