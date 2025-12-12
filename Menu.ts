@@ -1,10 +1,18 @@
 import readline from "readline-sync";
 import { colors } from "./src/util/Colors";
+import { Antibiotic } from "./src/model/Antibiotic";
+import { Psychotropic } from "./src/model/Psychotropic";
+import { MedicineController } from "./src/controller/MedicineController";
 
 
 export function main() {
 
-    let option: number;
+    let medicines: MedicineController = new MedicineController();
+    let option: number, id: number, laboratory: number, medicineType: number, medicineName: string, treatmentTime: number, medicineLabel: number, prescriptionColor: number;
+    const medicineTypes: string[] = ["Antibiótico", "Psicotrópico"];
+    const laboratories: string[] = ["Pfizer", "AstraZeneca"];
+    const medicineLabels: string[] = ["Vermelha", "Preta"];
+    const prescriptionColors: string[] = ["Amarela", "Azul"];
 
     while (true) {
         console.log(colors.bg.black, colors.fg.yellow, "***************************************************************");
@@ -36,36 +44,83 @@ export function main() {
             case 1:
                 console.log(colors.fg.whitestrong, "\n\nRegistrar Medicamento\n\n", colors.reset);
                 
+                console.log("Digite o nome do mediamento: ");
+                medicineName = readline.question("");
 
+                console.log("Digite o laboratório do Medicamento: ");
+                laboratory = readline.keyInSelect(laboratories, "", {cancel: false}) + 1;
+
+                console.log("Digite o tipo do Medicamento: ");
+                medicineType = readline.keyInSelect(medicineTypes, "", {cancel: false}) + 1;
+
+                switch(medicineType) {
+                    case 1:
+                        console.log("Tempo de tratamento (em dias) do antibiótico: ");
+                        treatmentTime = readline.questionInt("");
+                        medicines.registerMedicine(new Antibiotic(medicines.generateId(), laboratory, medicineType, medicineName, treatmentTime));
+                        break;
+                    case 2:
+                        console.log("Tarja do psicotrópico: ");
+                        medicineLabel = readline.keyInSelect(medicineLabels, "", {cancel: false}) + 1;
+                        console.log("Cor da receita para retirada do medicamento: ");
+                        prescriptionColor = readline.keyInSelect(prescriptionColors, "", {cancel: false}) + 1;
+                        medicines.registerMedicine(new Psychotropic(medicines.generateId(), laboratory, medicineType, medicineName, medicineLabel, prescriptionColor));
+                        break;
+                }
 
                 keyPress();
                 break;
             case 2:
                 console.log(colors.fg.whitestrong, "\n\nListar todos os Medicamentos\n\n", colors.reset);
-
-
-
+                medicines.listAllMedicines();
                 keyPress();
                 break;
             case 3:
                 console.log(colors.fg.whitestrong, "\n\nBuscar Medicamento por Número \n\n", colors.reset);
-
-
-
+                console.log("Digite o ID do medicamento: ");
+                id = readline.questionInt("");
+                medicines.findMedicineById(id);
                 keyPress();
                 break;
             case 4:
                 console.log(colors.fg.whitestrong, "\n\nAtualizar Dados do Medicamento\n\n", colors.reset);
+                console.log("Digite o ID do medicamento: ");
+                id = readline.questionInt("");
+                let medicine = medicines.searchInInventory(id);
+                
+                if (medicine !== null) {
+                    console.log("Digite o nome do mediamento: ");
+                    medicineName = readline.question("");
 
+                    console.log("Digite o laboratório do Medicamento: ");
+                    laboratory = readline.keyInSelect(laboratories, "", {cancel: false}) + 1;
+
+                    medicineType = medicine.medicineType;
+
+                    switch(medicineType) {
+                        case 1:
+                            console.log("Tempo de tratamento (em dias) do antibiótico: ");
+                            treatmentTime = readline.questionInt("");
+                            medicines.updateMedicine(new Antibiotic(medicine.id, laboratory, medicineType, medicineName, treatmentTime));
+                            break;
+                        case 2:
+                            console.log("Tarja do psicotrópico: ");
+                            medicineLabel = readline.keyInSelect(medicineLabels, "", {cancel: false}) + 1;
+                            console.log("Cor da receita para retirada do medicamento: ");
+                            prescriptionColor = readline.keyInSelect(prescriptionColors, "", {cancel: false}) + 1;
+                            medicines.updateMedicine(new Psychotropic(medicine.id, laboratory, medicineType, medicineName, medicineLabel, prescriptionColor));
+                            break;
+                    }
+                } else console.log(colors.fg.red, `\nO medicamento de ID ${id} não foi encontrado!`)
 
 
                 keyPress();
                 break;
             case 5:
                 console.log("\n\nApagar Medicamento\n\n", colors.reset);
-
-                
-
+                console.log("Digite o ID do medicamento: ");
+                id = readline.questionInt("");
+                medicines.deleteMedicine(id);
                 keyPress();
                 break;
             default:
