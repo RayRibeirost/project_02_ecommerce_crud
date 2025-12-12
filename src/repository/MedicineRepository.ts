@@ -5,5 +5,5 @@ export interface MedicineRepository {
     listAllMedicines(): void;
     registerMedicine(medicine: Medicine): void;
     updateMedicine(medicine: Medicine): void;
-    deleteMedicine(medicine: Medicine): void;
+    deleteMedicine(id: number): void;
 }
