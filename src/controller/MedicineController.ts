@@ -9,7 +9,7 @@ export class MedicineController implements MedicineRepository {
 
     findMedicineById(id: number): void {
         let searchMedicine = this.searchInInventory(id);
-        searchMedicine.viewMedicine();
+        searchMedicine?.viewMedicine();
     }
     listAllMedicines(): void {
         this.medicineList.forEach((med : Medicine) => med.viewMedicine());
@@ -38,7 +38,7 @@ export class MedicineController implements MedicineRepository {
     searchInInventory(id: number): any {
         try {
             let findMedicine: Medicine | undefined = this.medicineList.find((med : Medicine) => med.id === id);
-            if(!findMedicine) {
+            if(!findMedicine || findMedicine === undefined || findMedicine === null) {
                 throw new Error(`\nO medicamento de ID ${id} não foi encontrado!`)
             }
 
