@@ -1,4 +1,4 @@
-export class Medicine {
+export abstract class Medicine {
     private _id: number;
     private _laboratory: number;
     private _medicineType: number;
