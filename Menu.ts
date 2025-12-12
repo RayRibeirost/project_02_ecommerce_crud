@@ -8,11 +8,12 @@ import { MedicineController } from "./src/controller/MedicineController";
 export function main() {
 
     let medicines: MedicineController = new MedicineController();
-    let option: number, id: number, laboratory: number, medicineType: number, medicineName: string, treatmentTime: number, medicineLabel: number, prescriptionColor: number;
+    let option: number, id: number, laboratory: number, medicineType: number, medicineName: string, treatmentTime: number, medicineLabel: number, prescriptionColor: number, discrepancyChoice: number;
     const medicineTypes: string[] = ["Antibiótico", "Psicotrópico"];
     const laboratories: string[] = ["Pfizer", "AstraZeneca"];
     const medicineLabels: string[] = ["Vermelha", "Preta"];
     const prescriptionColors: string[] = ["Amarela", "Azul"];
+    const inventoryChoice: string[] = ["Sistema", "Coleta"];
 
     while (true) {
         console.log(colors.bg.black, colors.fg.yellow, "***************************************************************");
@@ -26,7 +27,8 @@ export function main() {
         console.log("                 3 - Buscar Medicamento por Número             ");
         console.log("                 4 - Atualizar Dados do Medicamento            ");
         console.log("                 5 - Apagar Medicamento                        ");
-        console.log("                 6 - Sair                                      ");
+        console.log("                 6 - Fazer Divergência                         ");
+        console.log("                 7 - Sair                                      ");
         console.log("                                                               ");
         console.log("***************************************************************", colors.reset);
 
@@ -34,7 +36,7 @@ export function main() {
         console.log("Entre com a opção desejada");
         option = readline.questionInt("");
 
-        if (option === 6) {
+        if (option === 7) {
             console.log("\nRede inventários farmacêuticos - Organizando a saúde da sua farmácia");
             about();
             process.exit(0);
@@ -44,7 +46,7 @@ export function main() {
             case 1:
                 console.log(colors.fg.whitestrong, "\n\nRegistrar Medicamento\n\n", colors.reset);
                 
-                console.log("Digite o nome do mediamento: ");
+                console.log("Digite o nome do medicamento: ");
                 medicineName = readline.question("");
 
                 console.log("Digite o laboratório do Medicamento: ");
@@ -57,14 +59,14 @@ export function main() {
                     case 1:
                         console.log("Tempo de tratamento (em dias) do antibiótico: ");
                         treatmentTime = readline.questionInt("");
-                        medicines.registerMedicine(new Antibiotic(medicines.generateId(), laboratory, medicineType, medicineName, treatmentTime));
+                        medicines.registerMedicine(new Antibiotic(medicines.generateId(), laboratory, medicineType, medicineName, medicines.generateInventoryCount(), medicines.generateInventoryCount(), medicines.gererateSystemId(), treatmentTime));
                         break;
                     case 2:
                         console.log("Tarja do psicotrópico: ");
                         medicineLabel = readline.keyInSelect(medicineLabels, "", {cancel: false}) + 1;
                         console.log("Cor da receita para retirada do medicamento: ");
                         prescriptionColor = readline.keyInSelect(prescriptionColors, "", {cancel: false}) + 1;
-                        medicines.registerMedicine(new Psychotropic(medicines.generateId(), laboratory, medicineType, medicineName, medicineLabel, prescriptionColor));
+                        medicines.registerMedicine(new Psychotropic(medicines.generateId(), laboratory, medicineType, medicineName, medicines.generateInventoryCount(), medicines.generateInventoryCount(), medicines.gererateSystemId(), medicineLabel, prescriptionColor));
                         break;
                 }
 
@@ -101,14 +103,14 @@ export function main() {
                         case 1:
                             console.log("Tempo de tratamento (em dias) do antibiótico: ");
                             treatmentTime = readline.questionInt("");
-                            medicines.updateMedicine(new Antibiotic(medicine.id, laboratory, medicineType, medicineName, treatmentTime));
+                            medicines.updateMedicine(new Antibiotic(medicines.generateId(), laboratory, medicineType, medicineName, medicines.generateInventoryCount(), medicines.generateInventoryCount(), medicines.gererateSystemId(), treatmentTime));
                             break;
                         case 2:
                             console.log("Tarja do psicotrópico: ");
                             medicineLabel = readline.keyInSelect(medicineLabels, "", {cancel: false}) + 1;
                             console.log("Cor da receita para retirada do medicamento: ");
                             prescriptionColor = readline.keyInSelect(prescriptionColors, "", {cancel: false}) + 1;
-                            medicines.updateMedicine(new Psychotropic(medicine.id, laboratory, medicineType, medicineName, medicineLabel, prescriptionColor));
+                            medicines.updateMedicine(new Psychotropic(medicines.generateId(), laboratory, medicineType, medicineName, medicines.generateInventoryCount(), medicines.generateInventoryCount(), medicines.gererateSystemId(), medicineLabel, prescriptionColor));
                             break;
                     }
                 } else console.log(colors.fg.red, `\nO medicamento de ID ${id} não foi encontrado!`)
@@ -121,6 +123,13 @@ export function main() {
                 console.log("Digite o ID do medicamento: ");
                 id = readline.questionInt("");
                 medicines.deleteMedicine(id);
+                keyPress();
+                break;
+            case 6:
+                console.log("\n\nFazer Divergência\n\n", colors.reset);
+                console.log("Escolha se quer manter dados do Sistema ou da última coleta: ");
+                discrepancyChoice = readline.keyInSelect(inventoryChoice, "", {cancel: false}) + 1;
+                medicines.inventoryDiscrepancy(discrepancyChoice);
                 keyPress();
                 break;
             default:

@@ -8,9 +8,12 @@ export class Antibiotic extends Medicine {
         laboratory: number,
         medicineType: number,
         medicineName: string,
+        systemCount: number,
+        inventoryCount: number,
+        systemId: number,
         treatmentTime: number,
     ) {
-        super(id, laboratory, medicineType, medicineName);
+        super(id, laboratory, medicineType, medicineName, systemCount, inventoryCount, systemId);
         this._treatmentTime = treatmentTime;
     }
 

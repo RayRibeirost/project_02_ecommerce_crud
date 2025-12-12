@@ -5,7 +5,7 @@ import { colors } from "../util/Colors";
 export class MedicineController implements MedicineRepository {
 
     private medicineList: Array<Medicine> = new Array<Medicine>();
-    lastIdNumber: number = 0
+    lastIdNumber: number = 0;
 
     findMedicineById(id: number): void {
         let searchMedicine = this.searchInInventory(id);
@@ -35,8 +35,31 @@ export class MedicineController implements MedicineRepository {
     generateId(): number {
         return ++this.lastIdNumber;
     }
+    generateInventoryCount(): number {
+        return Math.floor(Math.random() * 10) + 1;
+    }
+
+    gererateSystemId(): number {
+        let systemId: number = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        while(this.medicineList.some(el => el.systemId === systemId )) {
+            systemId = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+        }
+        return systemId;
+        
+    }
     searchInInventory(id: number): Medicine | null {
         let findMedicine: Medicine | undefined = this.medicineList.find((med : Medicine) => med.id === id);
         return findMedicine ? findMedicine : null;
+    }
+    inventoryDiscrepancy(inventoryChoice: number): void {
+        switch(inventoryChoice) {
+            case 1:
+                this.medicineList.forEach((med: Medicine) => {med.inventoryCount = med.systemCount});
+                console.log("Os dados do Sistema foram mantidos!");
+                break;
+            case 2:
+                this.medicineList.forEach((med: Medicine) => {med.systemCount = med.inventoryCount});
+                console.log("Os dados da última coleta foram mantidos!");
+        }
     }   
 }

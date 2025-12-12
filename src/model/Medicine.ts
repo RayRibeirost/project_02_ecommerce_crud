@@ -3,17 +3,26 @@ export abstract class Medicine {
     private _laboratory: number;
     private _medicineType: number;
     private _medicineName: string;
+    private _systemCount: number;
+    private _inventoryCount: number;
+    private _systemId: number;
 
     constructor (
         id: number,
         laboratory: number,
         medicineType: number,
         medicineName: string,
+        systemCount: number,
+        inventoryCount: number,
+        systemId: number,
     ) {
         this._id = id;
         this._laboratory = laboratory;
         this._medicineType = medicineType;
         this._medicineName = medicineName;
+        this._systemCount = systemCount;
+        this._inventoryCount = inventoryCount;
+        this._systemId = systemId; 
     }
 
     //getters
@@ -34,6 +43,18 @@ export abstract class Medicine {
         return this._medicineName;
     }
 
+    public get systemCount(): number {
+        return this._systemCount;
+    }
+
+    public get inventoryCount(): number {
+        return this._inventoryCount;
+    }
+
+    public get systemId(): number {
+        return this._systemId;
+    }
+
     //setters
 
     public set id(id: number) {
@@ -50,6 +71,18 @@ export abstract class Medicine {
 
     public set medicineName(medicineName: string) {
         this._medicineName = medicineName;
+    }
+
+    public set systemCount(systemCount: number) {
+        this._systemCount = systemCount
+    }
+
+    public set inventoryCount(inventoryCount: number) {
+        this._inventoryCount = inventoryCount
+    }
+
+    public set systemId(systemId: number) {
+        this._systemId = systemId
     }
 
     // methods
@@ -79,7 +112,9 @@ export abstract class Medicine {
         console.log("Dados do Medicamento:");
         console.log("******************************************************");
         console.log(`ID do Medicamento: ${this._id}`);
+        console.log(`ID do sistema farmacêutico geral: ${this._systemId}`);
         console.log(`Nome do Medicamento: ${this._medicineName}`);
+        console.log(`Unid. no sistema: ${this._systemCount} | Unid. contadas na coleta: ${this._inventoryCount}`);
         console.log(`Tipo do Medicamento: ${medicineType}`);
         console.log(`Laboratório: ${laboratory}`);
     }

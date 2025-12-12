@@ -9,10 +9,13 @@ export class Psychotropic extends Medicine {
         laboratory: number,
         medicineType: number,
         medicineName: string,
+        systemCount: number,
+        inventoryCount: number,
+        systemId: number,
         medicineLabel: number,
         prescriptionColor: number,
     ) {
-        super(id, laboratory, medicineType, medicineName);
+        super(id, laboratory, medicineType, medicineName, systemCount, inventoryCount, systemId);
         this._medicineLabel = medicineLabel;
         this._prescriptionColor = prescriptionColor;
     }
