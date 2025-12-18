@@ -1,19 +1,19 @@
 # 🏥 Pharmacy Inventory Management System
 
-> **Professional CLI-based inventory management system designed to demonstrate strong Object-Oriented Programming principles, domain modeling, and clean architectural separation.**
+> **Professional CLI-based pharmacy inventory system designed to demonstrate strong Object-Oriented Programming, domain modeling, and clean layered architecture within a regulated business context.**
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![OOP](https://img.shields.io/badge/Paradigm-OOP-important)
+![OOP](https://img.shields.io/badge/Paradigm-Object--Oriented-important)
 ![CLI](https://img.shields.io/badge/Interface-CLI-lightgrey)
 
 ---
 
 ## 📌 Executive Summary
 
-This project is a **Pharmacy Inventory Management System** implemented as a **Command-Line Interface (CLI)** application using **TypeScript and Node.js**. It was designed with a strong focus on **Object-Oriented Design**, **domain-driven thinking**, and **clear separation of responsibilities**, simulating real-world constraints found in regulated environments such as healthcare and pharmaceuticals.
+This project is a **Pharmacy Inventory Management System** implemented as a **Command-Line Interface (CLI)** application using **TypeScript**. It models a realistic pharmaceutical domain, handling different categories of medicines while enforcing domain-specific rules through a clean **Object-Oriented design**.
 
-The system manages different categories of medicines while enforcing domain-specific rules, making it a solid demonstration of **software design fundamentals** expected from professional-level engineers.
+The system was intentionally designed to focus on **software architecture, domain modeling, and separation of concerns**, simulating challenges commonly found in **healthcare, pharmaceutical, and regulated enterprise environments**.
 
 ---
 
@@ -21,31 +21,31 @@ The system manages different categories of medicines while enforcing domain-spec
 
 This project was built to:
 
-- Demonstrate **clean and maintainable Object-Oriented code**
-- Model a **realistic business domain** (pharmacy inventory)
-- Apply **inheritance, polymorphism, and encapsulation** correctly
-- Showcase separation between **domain, persistence, and control layers**
-- Serve as a foundation that could be evolved into a REST API, microservice, or full-stack system
+- Demonstrate strong **Object-Oriented Programming (OOP)** fundamentals
+- Model a **regulated pharmacy domain** with explicit business rules
+- Apply a **layered architecture** with clear responsibilities
+- Use inheritance and polymorphism to represent medicine categories
+- Serve as a solid foundation for future enterprise-grade evolution
 
-It is intentionally implemented as a CLI to emphasize **logic, architecture, and domain modeling over frameworks**.
+The CLI interface was deliberately chosen to prioritize **logic, structure, and domain correctness** over UI concerns.
 
 ---
 
 ## 🧠 Business Context
 
-Pharmacy systems operate under strict regulatory constraints. Certain categories of medicines (e.g. antibiotics, psychotropics) require special handling, validation, and control.
+Pharmacy and pharmaceutical systems operate under strict regulatory constraints. Certain medicines require differentiated handling, classification, and control due to legal and medical requirements.
 
 This system reflects that reality by:
 
-- Differentiating medicine types through **explicit domain models**
-- Encapsulating business rules within specialized classes
-- Avoiding an anemic domain model
+- Explicitly modeling **different types of medicines**
+- Encapsulating validation rules within domain entities
+- Avoiding procedural or anemic domain models
 
 ---
 
 ## 🏗️ Architecture Overview
 
-The application follows a **layered architecture**, clearly separating responsibilities:
+The application follows a **classic layered architecture**, commonly used in enterprise and regulated systems:
 
 ```
 ┌────────────────────┐
@@ -53,28 +53,28 @@ The application follows a **layered architecture**, clearly separating responsib
 └─────────┬──────────┘
           │
 ┌─────────▼──────────┐
-│    Controllers     │  → Orchestrate user actions
+│   Controller       │  → Orchestrates user actions and workflows
 └─────────┬──────────┘
           │
 ┌─────────▼──────────┐
-│  Domain Models     │  → Business rules & entities
+│   Domain Model     │  → Business rules and entities
 └─────────┬──────────┘
           │
 ┌─────────▼──────────┐
-│  Repositories      │  → Data storage abstraction
+│   Repository       │  → Persistence abstraction (in-memory)
 └────────────────────┘
 ```
 
-### Key Architectural Characteristics
+### Architectural Characteristics
 
 - Clear separation of concerns
 - Domain-centric design
-- No tight coupling between layers
-- Easy to refactor or extend
+- Low coupling between layers
+- High extensibility
 
 ---
 
-## 🧬 Domain Model & OOP Design
+## 🧬 Domain Model & Object-Oriented Design
 
 ### Class Hierarchy
 
@@ -86,38 +86,74 @@ Medicine (Base Class)
 
 ### Design Principles Applied
 
-- **Encapsulation**: Business rules are embedded within domain entities
-- **Inheritance**: Specialized medicine types extend a common base
-- **Polymorphism**: Controllers operate on abstractions, not concrete implementations
-- **Single Responsibility Principle**: Each class has a well-defined purpose
+- **Encapsulation**: Validation and state changes live inside domain entities
+- **Inheritance**: Specialized medicines extend a common base class
+- **Polymorphism**: Controllers operate on abstractions, not concrete types
+- **Single Responsibility Principle**: Each class has one well-defined role
 
-This structure reflects patterns commonly used in enterprise systems handling regulated data.
+This structure mirrors patterns commonly found in **healthcare and pharmaceutical software systems**.
 
 ---
 
 ## ✨ Core Features
 
-- Add medicines to inventory
+- Register medicines in inventory
+- Support for multiple medicine categories
+  - Antibiotics
+  - Psychotropic drugs
 - List all registered medicines
 - Remove medicines by identifier
-- Support for multiple medicine categories
-- Validation rules per medicine type
+- Domain-level validation per medicine type
 - In-memory persistence via repository pattern
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Detailed)
+
+The structure below reflects the **actual layout of the project**, with each file playing a specific architectural role:
 
 ```
 src/
-├── controller/       # Application flow & orchestration
-├── model/            # Domain entities and inheritance hierarchy
-├── repository/       # Persistence abstraction
-├── utils/            # Helper utilities
-└── index.ts          # Application entry point
+├── model/
+│   ├── Medicine.ts              # Base domain entity
+│   ├── Antibiotic.ts            # Specialized medicine with specific rules
+│   └── Psychotropic.ts          # Specialized medicine with specific rules
+│
+├── controller/
+│   └── MedicineController.ts    # Orchestrates CLI commands and use cases
+│
+├── repository/
+│   └── MedicineRepository.ts    # In-memory persistence abstraction
+│
+├── util/
+│   └── Colors.ts                # CLI output formatting utilities
+│
+└── index.ts                     # Application entry point and menu loop
 ```
 
-This structure mirrors patterns commonly found in backend services and enterprise applications.
+### Structural Rationale
+
+- **model/**
+  - Represents the pharmacy domain
+  - Encapsulates classification and validation rules
+  - Avoids anemic domain models
+
+- **controller/**
+  - Coordinates user input with domain operations
+  - Contains orchestration logic only
+
+- **repository/**
+  - Abstracts data persistence
+  - Enables future migration to databases or external services
+
+- **util/**
+  - Centralizes cross-cutting CLI concerns
+
+- **index.ts**
+  - Serves as the composition root
+  - Wires together controllers, repositories, and the CLI flow
+
+This organization closely resembles patterns used in **enterprise healthcare systems**.
 
 ---
 
@@ -126,7 +162,7 @@ This structure mirrors patterns commonly found in backend services and enterpris
 ### Prerequisites
 
 - Node.js 18+
-- npm or yarn
+- npm
 
 ### Installation
 
@@ -140,32 +176,31 @@ npm install
 npm run start
 ```
 
-The system will launch an interactive CLI menu allowing you to manage the pharmacy inventory.
+The application will launch an interactive CLI menu for managing the pharmacy inventory.
 
 ---
 
 ## 🛠️ Technical Decisions
 
-- **TypeScript** was chosen to enforce type safety and clarity
-- **CLI interface** keeps focus on business logic and architecture
-- **In-memory repository** simplifies setup while preserving abstraction
-- **No external frameworks** to highlight core engineering skills
+- **TypeScript** ensures type safety and maintainability
+- **CLI interface** emphasizes business logic over presentation
+- **Repository pattern** decouples persistence from domain logic
+- **Minimal dependencies** highlight core engineering skills
 
-These decisions align with interview-style coding challenges and technical assessments used by international companies.
+These decisions align with technical evaluations used by **international consultancies and enterprise companies**.
 
 ---
 
 ## 🔄 Extensibility & Future Improvements
 
-This project was intentionally designed to be extended. Possible next steps include:
+This project was intentionally designed to be extensible. Potential improvements include:
 
-- Persist data using PostgreSQL or MongoDB
-- Expose functionality via REST or GraphQL API
-- Introduce automated tests (Jest)
-- Add authentication & authorization
-- Implement logging and error handling layers
-- Containerize with Docker
-- Add CI pipelines
+- Persistent storage (SQL / NoSQL)
+- REST or GraphQL API exposure
+- Automated tests (unit and integration)
+- Authentication and authorization layers
+- Logging and audit trails
+- Dockerization and CI/CD pipelines
 
 ---
 
@@ -174,8 +209,8 @@ This project was intentionally designed to be extended. Possible next steps incl
 **Raylander Ribeiro**  
 Software Engineer
 
-- Focus: Backend / Software Architecture
-- Interests: Scalable systems, clean code, domain modeling
+- Focus: Backend Development & Software Architecture
+- Interests: Healthcare systems, clean code, domain-driven design
 
 ---
 
@@ -185,4 +220,4 @@ This project is licensed under the MIT License.
 
 ---
 
-> 💡 **Recruiter Note**: This project emphasizes software engineering fundamentals, architectural reasoning, and domain modeling — skills that scale across languages, frameworks, and platforms.
+> 💡 **Recruiter Note**: This project demonstrates strong architectural thinking, domain modeling, and Object-Oriented design within a regulated business context — skills directly applicable to enterprise and healthcare software systems.
